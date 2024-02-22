@@ -129,13 +129,12 @@ def temperature_start(start):
     if not (earliest_date <= start_date <= latest_date):
         return(f"Error: input date is not within rage ({earliest_date} to {latest_date})")
 
-    temp = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs),func.avg(Measurement.tobs)).filter(Measurement.date >= start_date).group_by(Measurement.date).all()
+    temp = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs),func.avg(Measurement.tobs)).filter(Measurement.date >= start_date).all()
     session.close()
 
     data_list = [] 
-    for date,min,max,avg in temp: 
+    for min,max,avg in temp: 
         data_dict = {} 
-        data_dict['Date'] = date 
         data_dict['TMIN'] = min 
         data_dict['TMAX'] = max 
         data_dict['TAVG'] = avg 
@@ -167,13 +166,12 @@ def temperature_start_end(start,end):
     if not (start_date <= end_date <= latest_date):
         return(f"Error: end date is out of rage, please select ({start_date} to {latest_date})")
 
-    temp = session.query(Measurement.date, func.min(Measurement.tobs), func.max(Measurement.tobs),func.avg(Measurement.tobs)).filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).group_by(Measurement.date).all()
+    temp = session.query(func.min(Measurement.tobs), func.max(Measurement.tobs),func.avg(Measurement.tobs)).filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
     session.close()
 
     data_list = [] 
-    for date,min,max,avg in temp: 
+    for min,max,avg in temp: 
         data_dict = {} 
-        data_dict['Date'] = date 
         data_dict['TMIN'] = min 
         data_dict['TMAX'] = max 
         data_dict['TAVG'] = avg 
