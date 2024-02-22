@@ -25,9 +25,6 @@ Base.prepare(autoload_with=engine)
 Measurement = Base.classes.measurement
 Station = Base.classes.station
 
-# Create a session
-
-
 #################################################
 # Flask Setup
 #################################################
@@ -51,6 +48,8 @@ def home():
         f"**end date: input a date between (start date) & 2017-08-23 in the format YYY-MM-DD"
     )
 
+
+
 @app.route("/api/v1.0/precipitation")
 def precipitation():
     "Precipitation of the latest year period"
@@ -68,6 +67,7 @@ def precipitation():
         data_dict['Precipitation'] = prcp 
         data_list.append(data_dict) 
     return (jsonify(data_list))
+
 
 
 @app.route("/api/v1.0/stations")
@@ -111,6 +111,7 @@ def tobs():
     return (jsonify(data_list))
 
 
+
 @app.route("/api/v1.0/<start>")
 def temperature_start(start):
     "the temperature status from the selected start date"
@@ -140,6 +141,7 @@ def temperature_start(start):
         data_dict['TAVG'] = avg 
         data_list.append(data_dict) 
     return (jsonify(data_list))
+
 
 
 @app.route("/api/v1.0/<start>/<end>")
@@ -177,6 +179,7 @@ def temperature_start_end(start,end):
         data_dict['TAVG'] = avg 
         data_list.append(data_dict) 
     return (jsonify(data_list))
+
 
 
 if __name__ == "__main__":
